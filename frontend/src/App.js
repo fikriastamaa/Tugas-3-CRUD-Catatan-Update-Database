@@ -1,5 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import './index.css';
+import { BASE_URL } from './utils';
+
 
 function App() {
   const [catatan, setCatatan] = useState([]);
@@ -7,7 +9,7 @@ function App() {
   const [isi, setIsi] = useState('');
   const [catatanId, setCatatanId] = useState(null);
 
-  const apiUrl = 'http://localhost:5000/catatan';
+  const apiUrl = `${BASE_URL}/catatan`;
 
   useEffect(() => {
     fetchCatatan();
