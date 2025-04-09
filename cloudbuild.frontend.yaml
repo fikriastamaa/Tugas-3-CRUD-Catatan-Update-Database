@@ -1,44 +1,35 @@
 steps:
-  # Step 1: Install dependencies
+  # Step 1: Install dependencies (dengan cache)
   - name: "gcr.io/cloud-builders/npm"
     entrypoint: bash
     args:
       - -c
       - |
-        if [ ! -d "node_modules" ]; then
-          echo "Installing dependencies..."
-          npm install
-        else
-          echo "Skipping npm install, node_modules exists."
-        fi
+        echo "Installing dependencies..."
+        npm install
     dir: "frontend"
     volumes:
       - name: "npm-cache"
         path: /root/.npm
 
-    # Step 2: Build with OpenSSL legacy provider
+  # Step 2: Build dengan OpenSSL legacy provider
   - name: "gcr.io/cloud-builders/npm"
     entrypoint: bash
     args:
       - -c
       - |
-        echo "Running build with legacy OpenSSL support..."
+        echo "Building frontend..."
         NODE_OPTIONS=--openssl-legacy-provider npm run build
     dir: "frontend"
     volumes:
       - name: "npm-cache"
         path: /root/.npm
 
-  # Step 3: Deploy static frontend
+  # Step 3: Deploy hanya folder build/
   - name: "gcr.io/google.com/cloudsdktool/cloud-sdk"
-    entrypoint: bash
-    args:
-      - -c
-      - |
-        echo "Deploying app with Node OpenSSL legacy provider..."
-        export NODE_OPTIONS=--openssl-legacy-provider
-        gcloud app deploy --quiet app.yaml
-    dir: "frontend"
+    entrypoint: gcloud
+    args: ["app", "deploy", "--quiet"]
+    dir: "frontend/build"
 
 options:
   logging: CLOUD_LOGGING_ONLY
