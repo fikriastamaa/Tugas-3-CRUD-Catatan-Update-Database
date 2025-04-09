@@ -22,6 +22,8 @@ steps:
     args:
       - -c
       - |
+        echo "Building with legacy OpenSSL provider..."
+        export NODE_OPTIONS=--openssl-legacy-provider
         npm run build
     dir: "frontend"
     volumes:
