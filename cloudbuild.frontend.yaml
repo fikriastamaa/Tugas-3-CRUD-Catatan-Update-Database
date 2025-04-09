@@ -31,8 +31,13 @@ steps:
 
   # Step 3: Deploy static frontend
   - name: "gcr.io/google.com/cloudsdktool/cloud-sdk"
-    entrypoint: gcloud
-    args: ["app", "deploy", "--quiet", "app.yaml"]
+    entrypoint: bash
+    args:
+      - -c
+      - |
+        echo "Deploying app with Node OpenSSL legacy provider..."
+        export NODE_OPTIONS=--openssl-legacy-provider
+        gcloud app deploy --quiet app.yaml
     dir: "frontend"
 
 options:
