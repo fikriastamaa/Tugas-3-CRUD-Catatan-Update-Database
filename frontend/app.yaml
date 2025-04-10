@@ -4,3 +4,4 @@ instance_class: F1
 
 env_variables:
   NODE_ENV: "production"
+  REACT_APP_API_URL: "https://be-notes-fikriastamaa-838229257481.us-central1.run.app"
