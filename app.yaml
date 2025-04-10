@@ -1,5 +1,5 @@
 runtime: nodejs20
-service: fe-notes-fikriastamaa
+service: fe-catatan-fikriastamaa
 instance_class: F1
 
 env_variables:
