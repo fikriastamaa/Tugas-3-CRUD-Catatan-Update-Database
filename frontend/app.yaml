@@ -1,3 +1,6 @@
 runtime: nodejs18
-service: fe-catatan-fikriastamaa
+service: fe-notes-fikriastamaa
 instance_class: F1
+
+env_variables:
+  NODE_ENV: "production"
