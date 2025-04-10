@@ -22,7 +22,8 @@ steps:
     args:
       - -c
       - |
-        npm run build
+        echo "Building the frontend..."
+        npm run build --verbose
     dir: "frontend"
     volumes:
       - name: "npm-cache"
