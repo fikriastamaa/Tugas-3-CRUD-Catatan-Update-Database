@@ -1,26 +1,12 @@
 steps:
-  # Step 1: Set up Node.js versi LTS
-  - name: "gcr.io/cloud-builders/docker"
-    args: ["build", "-t", "frontend-image", "."]
-    dir: "frontend"
-    env:
-      - "NODE_VERSION=16" # Gunakan versi Node.js yang lebih stabil (LTS)
+  - name: "gcr.io/google.com/cloudsdktool/cloud-sdk"
+    entrypoint: "bash"
+    args:
+      [
+        "-c",
+        "gcloud config set app/cloud_build_timeout 1600 && gcloud app deploy",
+      ]
+timeout: "1600s"
 
-  # Step 2: Install dependencies
-  - name: "gcr.io/cloud-builders/npm"
-    entrypoint: "npm"
-    args: ["install"]
-    dir: "frontend" # Sesuaikan dengan direktori proyekmu
-
-  # Step 3: Build the application
-  - name: "gcr.io/cloud-builders/npm"
-    entrypoint: "npm"
-    args: ["run", "build"]
-    dir: "frontend" # Sesuaikan dengan direktori proyekmu
-
-# Optional: Set up logging
-logs_bucket: gs://your-log-bucket # Pastikan kamu sudah membuat bucket ini
-# atau jika kamu ingin menonaktifkan logging:
-logging: CLOUD_LOGGING_ONLY # Atau NONE, jika kamu ingin menonaktifkan logging
-
-timeout: "1200s" # Optional: set timeout untuk build jika build lama
+options:
+  logging: CLOUD_LOGGING_ONLY
