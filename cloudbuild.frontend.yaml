@@ -16,12 +16,13 @@ steps:
       - name: "npm-cache"
         path: /root/.npm
 
-  # Step 2: Build frontend
+    # Step 2: Build frontend
   - name: "gcr.io/cloud-builders/npm"
     entrypoint: bash
     args:
       - -c
       - |
+        export NODE_OPTIONS=--openssl-legacy-provider
         npm run build
     dir: "frontend"
     volumes:
