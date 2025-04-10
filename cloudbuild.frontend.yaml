@@ -18,9 +18,9 @@ steps:
     args: ["run", "build"]
     dir: "frontend" # Sesuaikan dengan direktori proyekmu
 
-  # Step 4: Optional: Push Docker image if needed
-  # - name: 'gcr.io/cloud-builders/docker'
-  #   args: ['push', 'gcr.io/$PROJECT_ID/frontend-image']
+# Optional: Set up logging
+logs_bucket: gs://your-log-bucket # Pastikan kamu sudah membuat bucket ini
+# atau jika kamu ingin menonaktifkan logging:
+logging: CLOUD_LOGGING_ONLY # Atau NONE, jika kamu ingin menonaktifkan logging
 
-# Optionally, specify the timeout for the build
-timeout: "1200s" # Optional: set timeout for the build if it's long
+timeout: "1200s" # Optional: set timeout untuk build jika build lama
