@@ -1,39 +1,26 @@
 steps:
-  # Step 1: Install dependencies
+  # Step 1: Set up Node.js versi LTS
+  - name: "gcr.io/cloud-builders/docker"
+    args: ["build", "-t", "frontend-image", "."]
+    dir: "frontend"
+    env:
+      - "NODE_VERSION=16" # Gunakan versi Node.js yang lebih stabil (LTS)
+
+  # Step 2: Install dependencies
   - name: "gcr.io/cloud-builders/npm"
-    entrypoint: bash
-    args:
-      - -c
-      - |
-        if [ ! -d "node_modules" ]; then
-          echo "Installing dependencies..."
-          npm ci
-        else
-          echo "Skipping npm install, node_modules exists."
-        fi
-    dir: "frontend"
-    volumes:
-      - name: "npm-cache"
-        path: /root/.npm
+    entrypoint: "npm"
+    args: ["install"]
+    dir: "frontend" # Sesuaikan dengan direktori proyekmu
 
-  # Step 2: Build frontend
+  # Step 3: Build the application
   - name: "gcr.io/cloud-builders/npm"
-    entrypoint: bash
-    args:
-      - -c
-      - |
-        echo "Building the frontend..."
-        npm run build --verbose
-    dir: "frontend"
-    volumes:
-      - name: "npm-cache"
-        path: /root/.npm
+    entrypoint: "npm"
+    args: ["run", "build"]
+    dir: "frontend" # Sesuaikan dengan direktori proyekmu
 
-  # Step 3: Deploy ke App Engine
-  - name: "gcr.io/google.com/cloudsdktool/cloud-sdk"
-    entrypoint: gcloud
-    args: ["app", "deploy", "--quiet"]
-    dir: "frontend"
+  # Step 4: Optional: Push Docker image if needed
+  # - name: 'gcr.io/cloud-builders/docker'
+  #   args: ['push', 'gcr.io/$PROJECT_ID/frontend-image']
 
-options:
-  logging: CLOUD_LOGGING_ONLY
+# Optionally, specify the timeout for the build
+timeout: "1200s" # Optional: set timeout for the build if it's long
