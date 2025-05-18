@@ -8,6 +8,38 @@ function App() {
   const [judul, setJudul] = useState('');
   const [isi, setIsi] = useState('');
   const [catatanId, setCatatanId] = useState(null);
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const [showRegister, setShowRegister] = useState(false);
+
+  if (!isLoggedIn) {
+    return showRegister ? (
+      <div>
+        <Register />
+        <p className="text-center mt-3">
+          Already have an account?{' '}
+          <button
+            className="btn btn-link"
+            onClick={() => setShowRegister(false)}
+          >
+            Login here
+          </button>
+        </p>
+      </div>
+    ) : (
+      <div>
+        <Login onLoginSuccess={() => setIsLoggedIn(true)} />
+        <p className="text-center mt-3">
+          Don't have an account?{' '}
+          <button
+            className="btn btn-link"
+            onClick={() => setShowRegister(true)}
+          >
+            Register here
+          </button>
+        </p>
+      </div>
+    );
+  }
 
   const apiUrl = `${BASE_URL}/catatan`;
 

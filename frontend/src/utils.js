@@ -1,1 +1,1 @@
-export const BASE_URL = 'https://be-notes-fikriastamaa-838229257481.us-central1.run.app';
+export const BASE_URL = 'https://be-auth-fikri-86067911510.us-central1.run.app';
