@@ -1,2 +1,2 @@
 runtime: nodejs20
-service: fe-notes-fikriastamaa
+service: fe-auth-fikri
