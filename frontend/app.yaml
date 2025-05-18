@@ -1,4 +1,4 @@
-runtime: nodejs18
+runtime: nodejs20
 env: standard
 automatic_scaling:
   target_cpu_utilization: 0.65
