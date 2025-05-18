@@ -22,9 +22,19 @@ function App() {
   }, [isLoggedIn]);
 
   const fetchCatatan = async () => {
-    const response = await fetch(apiUrl);
-    const data = await response.json();
-    setCatatan(data);
+    const token = localStorage.getItem('accessToken'); // Ambil token dari localStorage
+    const response = await fetch(apiUrl, {
+      headers: {
+        Authorization: `Bearer ${token}`, // Sertakan token di header
+      },
+    });
+  
+    if (response.ok) {
+      const data = await response.json();
+      setCatatan(data); // Simpan data catatan ke state
+    } else {
+      console.error('Failed to fetch catatan:', await response.text());
+    }
   };
 
   const handleSubmit = async (e) => {
